@@ -1,6 +1,7 @@
 interface Env {
 	CORS_ALLOW_ORIGIN: string;
-	QUICKNODE_API_KEY: string;
+	GET_BLOCK_API_KEY: string;
+	GET_BLOCK_WS_KEY: string;
 }
 
 export default {
@@ -37,13 +38,13 @@ export default {
 		const upgradeHeader = request.headers.get('Upgrade')
 
 		if (upgradeHeader || upgradeHeader === 'websocket') {
-			return await fetch(`https://misty-dark-patron.solana-mainnet.quiknode.pro/${env.QUICKNODE_API_KEY}/`, request)
+			return await fetch(`https://go.getblock.io/${env.GET_BLOCK_WS_KEY}`, request)
 		}
 
 
 		const { pathname, search } = new URL(request.url)
 		const payload = await request.text();
-		const proxyRequest = new Request(`https://misty-dark-patron.solana-mainnet.quiknode.pro/${env.QUICKNODE_API_KEY}/`, {
+		const proxyRequest = new Request(`https://go.getblock.io/${env.GET_BLOCK_API_KEY}`, {
 			method: request.method,
 			body: payload || null,
 			headers: {
